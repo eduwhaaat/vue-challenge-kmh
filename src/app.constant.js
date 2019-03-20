@@ -1,0 +1,1 @@
+export default appConstant = {"userRoles":["guest","customer","employee","manager","admin"]}

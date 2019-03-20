@@ -29,23 +29,23 @@
 
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('gender')">
-                <label for="gender">Gender</label>
-                <md-select name="gender" id="gender" v-model="form.gender" md-dense :disabled="sending">
+              <md-field :class="getValidationClass('role')">
+                <label for="role">User Role</label>
+                <md-select name="role" id="role" v-model="form.role" md-dense :disabled="sending">
                   <md-option></md-option>
-                  <md-option value="M">M</md-option>
-                  <md-option value="F">F</md-option>
+                  <md-option value="Admin">Admin</md-option>
+                  <md-option value="Guest">Guest</md-option>
                 </md-select>
-                <span class="md-error">The gender is required</span>
+                <span class="md-error">The role is required</span>
               </md-field>
             </div>
 
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('age')">
-                <label for="age">Age</label>
-                <md-input type="number" id="age" name="age" autocomplete="age" v-model="form.age" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.age.required">The age is required</span>
-                <span class="md-error" v-else-if="!$v.form.age.maxlength">Invalid age</span>
+              <md-field :class="getValidationClass('phone')">
+                <label for="phone">Phone Number</label>
+                <md-input id="phone" name="phone" autocomplete="phone" v-model="form.phone" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.phone.required">The phone number is required</span>
+                <span class="md-error" v-else-if="!$v.form.phone.maxlength">Invalid phone number</span>
               </md-field>
             </div>
           </div>
@@ -79,15 +79,16 @@
     maxLength
   } from 'vuelidate/lib/validators'
 
+
   export default {
-    name: 'FormValidation',
+    name: 'AddUser',
     mixins: [validationMixin],
     data: () => ({
       form: {
         firstName: null,
         lastName: null,
-        gender: null,
-        age: null,
+        role: null,
+        phone: null, 
         email: null,
       },
       userSaved: false,
@@ -104,11 +105,11 @@
           required,
           minLength: minLength(3)
         },
-        age: {
+        phone: {
           required,
-          maxLength: maxLength(3)
+          maxLength: minLength(6)
         },
-        gender: {
+        role: {
           required
         },
         email: {
@@ -131,8 +132,8 @@
         this.$v.$reset()
         this.form.firstName = null
         this.form.lastName = null
-        this.form.age = null
-        this.form.gender = null
+        this.form.phone = null
+        this.form.role = null
         this.form.email = null
       },
       saveUser () {
